@@ -135,6 +135,7 @@ Note:
 
 
 ## Entity class
+## <img src="custom/images/entityclass.png">
 ## <pre><code>
 <?php
 
@@ -146,7 +147,6 @@ Class Blog extends ContentEntityBase {
 
 
 } </code></pre>
-## <img src="custom/images/entityclass.png">
 Note:
 - Blog entity is instance of the entity class
 - entity class in d8 resides in modules/<module_name>/src folder

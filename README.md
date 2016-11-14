@@ -123,9 +123,9 @@ Note:
 ## Custom entity
 ## Blog content type
 ## <pre><code>
-   name: Blog
-   type: module
-   core: 8.x
+   name: Blog <br />
+   type: module <br />
+   core: 8.x <br />
 </pre></code>
 Note:
 - We are creating blog content type as a custom entity

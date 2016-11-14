@@ -114,15 +114,9 @@ Note:
 
 
 
-## Create entity
-## <img src="custom/images/entitycreate.png">
-
-
-
-
 ## Custom entity
-## Blog content type
-## <pre><code>
+### Blog content type
+### <pre><code>
    name: Blog <br />
    type: module <br />
    core: 8.x <br />
@@ -162,8 +156,109 @@ Note:
 
 
 
+## https://api.drupal.org/api/drupal/core%21core.api.php/group/oo_conventions/8.2.x
+Note:
+- Follow the link to see OOP conventions in Drupal 8.2.x
+
+
 ## Annotations
 ## <img src="custom/images/entityannotations.png">
-
 Note:
 - Annotations provides metadata about the code.
+- As you can see annotations are part of comment but they are required for the entity type to function
+- Let's take a look
+- ID is ID of the entity type which is needed.
+- Provided different labels for different possible usages
+- Along with the label, we have provided storage information in base table
+- We are providing database table we want blog data to be stored.
+- ID and UUID are database columns
+
+
+
+## https://api.drupal.org/api/drupal/core%21core.api.php/group/annotation/8.2.x
+Note:
+- Link if you would like to read more about annotations.
+
+
+
+## Install blog entity
+## <pre><code> drush entity-updates </code></pre>
+Note:
+- We have our blog entity class and annotations
+- Let's install blog entity
+- by running this drush command, drupal will crate database schema for our blog entity
+- If you check db, you will see blog table in the database.
+
+
+
+## Create and save blog
+## <pre> <code>
+use Drupal\blog\Entity\Blog;
+
+$blog = Blog::create();
+$blog->save();
+</code></pre>
+Note:
+- for creating, saving, deleting entity type, we are going to use drush
+- You can either use drush core-cli or create a test.php script and then running drush php-script test.php
+- This command creates new blog entity in db and you will see a new row with id and uuid
+- Let's explore the code
+- Blog class inherits create and save method from ContentEntityBase
+- These methods can be inherited without being present in the Blog class
+- create is a static method and it is called by using the class name and ::syntax
+- save is not a static method so it is used with instance of the class and -> syntax
+
+
+
+## Load blog
+## <pre><code>
+use Drupal\blog\Entity\Blog;
+
+$blog = Blog::load(1);
+$blog->id();
+$blog->uuid();
+</code></pre>
+Note:
+- loading blog entity from db
+
+
+
+## Delete blog
+## <pre><code>
+use Drupal\blog\Entity\Blog;
+
+$blog = Blog::load(1);
+$blog->delete();
+</code></pre>
+Note:
+- Deleting blog will result in deleting record from db
+
+
+
+## Add fields
+## <pre><code>
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Field\BaseFieldDefinition;
+
+public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
+  // Get field definitions for 'id' and 'uuid' from the parent.
+  $fields = parent::baseFieldDefinitions($entity_type);
+
+  $fields['title'] = BaseFieldDefinition::create('string')
+    ->setLabel(t('Title'))
+    ->setRequired(TRUE);
+
+  $fields['description'] = BaseFieldDefinition::create('text_long')
+    ->setLabel(t('Description'));
+
+  $fields['published'] = BaseFieldDefinition::create('boolean')
+    ->setLabel(t('Published'))
+    ->setDefaultValue(FALSE);
+
+  return $fields;
+}
+
+Note:
+- Let's add some fields to blog entity
+- We have the following code in /src/Entity/Blog.php
+- 

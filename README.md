@@ -243,8 +243,20 @@ use Drupal\Core\Field\BaseFieldDefinition;
 public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
   // Get field definitions for 'id' and 'uuid' from the parent.
   $fields = parent::baseFieldDefinitions($entity_type);
+</code></pre>
+Note:
+- Let's add some fields to blog entity
+- We have the following code in /src/Entity/Blog.php
+- We are using type hint in the method EntityTypeInterface $entity_type
+- EntityTypeInterface is type hint. Type hint indicates what type of parameter should be passed in the function
+- Our blog class is extending ContentEntityBase which has baseFieldDefinitions method
+- this method provides id and uuid fields.
 
-  $fields['title'] = BaseFieldDefinition::create('string')
+
+
+## code...
+## <pre><code>
+ $fields['title'] = BaseFieldDefinition::create('string')
     ->setLabel(t('Title'))
     ->setRequired(TRUE);
 
@@ -257,8 +269,33 @@ public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
 
   return $fields;
 }
-
+</code></pre>
 Note:
-- Let's add some fields to blog entity
-- We have the following code in /src/Entity/Blog.php
-- 
+- continuation of code
+- As you can see... we are adding title, description and published fields
+- Passing static create method to create fields
+- chaining method?
+
+
+
+
+## https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Field%21Annotation%21FieldType.php/class/annotations/FieldType/8.2.x
+Note:
+- List of all field types in Drupal 8 core
+
+
+
+
+## Install fields
+## <pre><code>
+drush entity-updates
+</code></pre>
+Note:
+- We have added fields to our blog entity
+- let's install fields
+- After running drush command, you will see title, description and published column in blog table.
+
+
+
+
+

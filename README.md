@@ -29,7 +29,7 @@ Note:
 ## Comments
 ## Files
 ## Taxonomy terms
-## Vocabularies
+## Vocabularies (Config entity)
 ## Users
 ## Custom entity
 Note:
@@ -43,11 +43,11 @@ Note:
 ## Fields
 Note:
 - Bundles are implementation of entity types to which fields can be attached.
-- Bundles can be considered as sub content types.
-- For example - article, news releases, blog are bundles of content(node) type.
+- Bundles can be considered as sub entity types.
+- For example - article, news releases, blog are bundles of node entity type.
 - not all entities has bundle types like users
-- Fields are reusable piece of content. You can create custom field, custom formats, widgets etc
-- Fields can be attached to bundles or entities.
+- Fields are reusable piece of content. You can create custom field, custom formatters, widgets etc
+- Fields can be attached to bundles or entity type.
 
 
 
@@ -55,7 +55,7 @@ Note:
 ## api.drupal.org/api/drupal/core!lib!Drupal!Core!Entity!entity.api.php/group/entity_api/8.2.x
 Note:
 - We are back to our original question.. what is entity?
-- Entity is one instance of a particular entity type such as comment, taxonomy term, user or blog, article (bundles)
+- Entity is one instance of a particular entity type such as comment, taxonomy term, user.
 - Entity API was it's own module in Drupal 7
 - Entity api is in Drupal 8 core.
 - Link is for latest Drupal 8 core which is 8.2.x
@@ -89,7 +89,7 @@ Note:
 
 
 ## Check
-## <img src="custom/images/entitycheck.png">
+## <img src="custom/images/entity-check.png">
 Note:
 - Entity API in D8 is powerful
 - It allows us to run different checks
@@ -97,7 +97,7 @@ Note:
 - If it is a content entity
 - You can get the entity type
 - Check if it is a node
-- Explain the last one?
+
 
 
 
@@ -114,45 +114,37 @@ Note:
 
 
 
+
 ## Custom entity
-### Blog content type
-### <pre><code>
-   name: Blog <br />
-   type: module <br />
-   core: 8.x <br />
-</pre></code>
+### Event entity type
+### <img src="custom/images/event-info.png">
 Note:
-- We are creating blog content type as a custom entity
-- First step... create folder modules/blog
-- create blog.info.yml
+- We are creating event content type as a custom entity
+- First step... create folder modules/event
+- create event.info.yml
 
 
 
 ## Entity class
-## <img src="custom/images/entityclass.png">
-## <pre><code>
-<?php
-
-namespace Drupal\blog\Entity;
-
-use Drupal\Core\Entity\ContentEntityBase;
-
-Class Blog extends ContentEntityBase {
-
-
-} </code></pre>
+## <img src="custom/images/entity-class.png">
 Note:
-- Blog entity is instance of the entity class
+- Event entity is instance of the entity class
 - entity class in d8 resides in modules/<module_name>/src folder
-- We have blog entity in src folder
+- We have event entity in src folder
 - In d8, src directory has all OOP code like class, interfaces, traits
 - Procedural code is in .module file outside src directory
-- We have /src/Entity/Blog.php
+- We have /src/Entity/Event.php
 - Let's take a look at the code
-- We have namespace which allows code from different frameworks like Symfony, Drupal
+- We have namespace which allows code from different frameworks like Symfony, Drupal to be used simultaneously without risking naming conflicts.
 - Namespace has multiple parts. All classes in core and modules have Drupal as top level namespace
 - second part contain name of the module
 - third part corresponds to the folder inside src folder
+- extends Base classes can be used to implement functionality that is generic and useful for many classes.
+- Classes can inherit all functionality from such a base class by using the extends keyword.
+- Content entities are entities that are created by site users.
+- They are typically stored in the database, often with a auto-incrementing integer ID.
+- ContentEntityBase class also belongs to a namespace.
+- Thus, in order to use it below, we need to import the class using the full namespace.
 
 
 
@@ -162,15 +154,19 @@ Note:
 
 
 ## Annotations
-## <img src="custom/images/entityannotations.png">
+## <img src="custom/images/event-annotations.png">
 Note:
 - Annotations provides metadata about the code.
-- As you can see annotations are part of comment but they are required for the entity type to function
+- Because the annotation is placed right next to the code itself,
+- this makes classes truly self-contained as both functionality and metadata are in the same file.
+- Even though the annotation is part of a comment block, it is required for the entity type to function.
 - Let's take a look
 - ID is ID of the entity type which is needed.
 - Provided different labels for different possible usages
+- We make annotations translatable by wrapping them into @Translation or @PluralTranslation
 - Along with the label, we have provided storage information in base table
-- We are providing database table we want blog data to be stored.
+- We are providing database table(base table) we want event data to be stored.
+- Entities are required to have an ID which they can be loaded by.
 - ID and UUID are database columns
 
 
@@ -181,75 +177,55 @@ Note:
 
 
 
-## Install blog entity
+## Install event entity
 ## <pre><code> drush entity-updates </code></pre>
 Note:
-- We have our blog entity class and annotations
-- Let's install blog entity
-- by running this drush command, drupal will crate database schema for our blog entity
-- If you check db, you will see blog table in the database.
+- We have our event entity class and annotations
+- Let's install event entity
+- by running this drush command, drupal will crate database schema for our event entity
+- If you check db, you will see event table in the database.
 
 
 
-## Create and save blog
-## <pre> <code>
-use Drupal\blog\Entity\Blog;
-
-$blog = Blog::create();
-$blog->save();
-</code></pre>
+## Create and save event entity
+## <img src="custom/images/create-entity.png">
 Note:
 - for creating, saving, deleting entity type, we are going to use drush
 - You can either use drush core-cli or create a test.php script and then running drush php-script test.php
-- This command creates new blog entity in db and you will see a new row with id and uuid
+- This command creates new event entity in db and you will see a new row with id and uuid
 - Let's explore the code
-- Blog class inherits create and save method from ContentEntityBase
-- These methods can be inherited without being present in the Blog class
+- Event class inherits create and save method from ContentEntityBase
+- These methods can be inherited without being present in the event class
 - create is a static method and it is called by using the class name and ::syntax
 - save is not a static method so it is used with instance of the class and -> syntax
 
 
 
-## Load blog
-## <pre><code>
-use Drupal\blog\Entity\Blog;
-
-$blog = Blog::load(1);
-$blog->id();
-$blog->uuid();
-</code></pre>
+## Load event
+## <img src="custom/images/load-entity.png">
 Note:
-- loading blog entity from db
+- loading event entity from db
+- Notice load(1) . it expects some value and since it is expecting incremental value hence 1
 
 
 
-## Delete blog
-## <pre><code>
-use Drupal\blog\Entity\Blog;
-
-$blog = Blog::load(1);
-$blog->delete();
-</code></pre>
+## Delete event
+## <img src="custom/images/delete-entity.png">
 Note:
-- Deleting blog will result in deleting record from db
+- Deleting event will result in deleting record from db
 
 
 
 ## Add fields
-## <pre><code>
-use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Field\BaseFieldDefinition;
-
-public static function baseFieldDefinitions(EntityTypeInterface $entity_type) {
-  // Get field definitions for 'id' and 'uuid' from the parent.
-  $fields = parent::baseFieldDefinitions($entity_type);
-</code></pre>
+## <img src="custom/images/field-definitions.png">
 Note:
-- Let's add some fields to blog entity
-- We have the following code in /src/Entity/Blog.php
+- Let's add some fields to event entity
+- Fields are the pieces of data that make up an entity.
+- To be able to store actual event data in our entities, we need to declare additional fields.
+- We have the following code in /src/Entity/Event.php
 - We are using type hint in the method EntityTypeInterface $entity_type
 - EntityTypeInterface is type hint. Type hint indicates what type of parameter should be passed in the function
-- Our blog class is extending ContentEntityBase which has baseFieldDefinitions method
+- Our event class is extending ContentEntityBase which has baseFieldDefinitions method
 - this method provides id and uuid fields.
 
 

@@ -52,7 +52,7 @@ Note:
 
 
 ## Entity
-## api.drupal.org/api/drupal/core!lib!Drupal!Core!Entity!entity.api.php/group/entity_api/8.2.x
+## http://api.drupal.org/api/drupal/core!lib!Drupal!Core!Entity!entity.api.php/group/entity_api/8.2.x
 Note:
 - We are back to our original question.. what is entity?
 - Entity is one instance of a particular entity type such as comment, taxonomy term, user.
@@ -122,6 +122,7 @@ Note:
 - We are creating event content type as a custom entity
 - First step... create folder modules/event
 - create event.info.yml
+- Install event module
 
 
 
@@ -148,9 +149,12 @@ Note:
 
 
 
+
 ## https://api.drupal.org/api/drupal/core%21core.api.php/group/oo_conventions/8.2.x
 Note:
 - Follow the link to see OOP conventions in Drupal 8.2.x
+- This link talks about PSR-4, namespaces, class naming, and other conventions.
+
 
 
 ## Annotations
@@ -164,11 +168,14 @@ Note:
 - Let's take a look
 - ID is ID of the entity type which is needed.
 - Provided different labels for different possible usages
+- Because the label of this entity type might be used in a sentence and when referencing multiple entities we need to provide different labels for the different possible usages.
 - We make annotations translatable by wrapping them into @Translation or @PluralTranslation
 - Along with the label, we have provided storage information in base table
 - We are providing database table(base table) we want event data to be stored.
 - Entities are required to have an ID which they can be loaded by.
 - ID and UUID are database columns
+- UUID to make it easier to track content because it will be same in each environment
+
 
 
 
@@ -194,6 +201,8 @@ Note:
 Note:
 - for creating, saving, deleting entity type, we are going to use drush
 - You can either use drush core-cli or create a test.php script and then running drush php-script test.php
+- What does drush core-cli do?
+- It opens interactive shell.
 - This command creates new event entity in db and you will see a new row with id and uuid
 - Let's explore the code
 - Event class inherits create and save method from ContentEntityBase
@@ -208,6 +217,7 @@ Note:
 Note:
 - loading event entity from db
 - Notice load(1) . it expects some value and since it is expecting incremental value hence 1
+- loading event by fetching ID and UUID
 
 
 
@@ -277,6 +287,7 @@ Note:
 ## Load event
 ## <img src="custom/images/load-entity-2.png">
 Note:
+- Computed fields bring the ability to define fields on an object whose value is computed from the values of other fields.
 - In addition to the stored properties field types can also declare computed properties,
 - such as the date property of a datetime field or the processed property of text fields.
 
@@ -303,6 +314,7 @@ Note:
 ## Viewing entities on a page
 ## <img src="custom/images/route-handler.png">
 Note:
+- Viewing an entity on a page requires a view builder that is responsible for constructing a renderable array from an entity object.
 - a route is needed that utilizes the view builder to output the entity’s fields on a given path
 - Add the following to the annotation in src/Entity/Event.php
 - Entity handlers are objects that take over certain tasks related to entities

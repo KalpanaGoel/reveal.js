@@ -157,6 +157,7 @@ Note:
 ## <img src="custom/images/event-annotations.png">
 Note:
 - Annotations provides metadata about the code.
+- annotations are taken from doctrine project and Drupal adopted it.
 - Because the annotation is placed right next to the code itself,
 - this makes classes truly self-contained as both functionality and metadata are in the same file.
 - Even though the annotation is part of a comment block, it is required for the entity type to function.
@@ -182,6 +183,7 @@ Note:
 Note:
 - We have our event entity class and annotations
 - Let's install event entity
+- drush entity-updates (only need to run if module is already installed)
 - by running this drush command, drupal will crate database schema for our event entity
 - If you check db, you will see event table in the database.
 
@@ -224,34 +226,23 @@ Note:
 - To be able to store actual event data in our entities, we need to declare additional fields.
 - We have the following code in /src/Entity/Event.php
 - We are using type hint in the method EntityTypeInterface $entity_type
-- EntityTypeInterface is type hint. Type hint indicates what type of parameter should be passed in the function
+- EntityTypeInterface is type hint. Type hint indicates what type of object should be passed in the function
 - Our event class is extending ContentEntityBase which has baseFieldDefinitions method
 - this method provides id and uuid fields.
-
-
-
-## code...
-## <pre><code>
- $fields['title'] = BaseFieldDefinition::create('string')
-    ->setLabel(t('Title'))
-    ->setRequired(TRUE);
-
-  $fields['description'] = BaseFieldDefinition::create('text_long')
-    ->setLabel(t('Description'));
-
-  $fields['published'] = BaseFieldDefinition::create('boolean')
-    ->setLabel(t('Published'))
-    ->setDefaultValue(FALSE);
-
-  return $fields;
-}
-</code></pre>
-Note:
-- continuation of code
 - As you can see... we are adding title, description and published fields
 - Passing static create method to create fields
-- chaining method?
 
+
+
+
+## Chaining
+## <img src="custom/images/chaining-1.png">
+## <img src="custom/images/chaining-2.png">
+Note:
+- To set up title field, we can first create text field, add label, and make it required field.
+- Three line of code
+- Or we can chain multiple setter methods one after the other.
+- Not sure if chaining method is good but Drupal 8 core uses a lot.
 
 
 
@@ -267,11 +258,109 @@ Note:
 drush entity-updates
 </code></pre>
 Note:
-- We have added fields to our blog entity
+- We have added fields to our event entity
 - let's install fields
-- After running drush command, you will see title, description and published column in blog table.
+- After running drush command, you will see title, description and published column other field in event table.
 
 
 
 
+## Add format for a field
+## <img src="custom/images/field-formatter.png">
+Note:
+- So far we have added single property value fields.
+- In this example, we are trying to add additional format property.
+- This will create a new row in the event table with proper field values.
+
+
+
+## Load event
+## <img src="custom/images/load-entity-2.png">
+Note:
+- In addition to the stored properties field types can also declare computed properties,
+- such as the date property of a datetime field or the processed property of text fields.
+
+
+
+## Add field methods
+## <img src="custom/images/field-methods.png">
+Note:
+- Instead of relying on get and set methods, it is recommended to add field-specific method
+- Add following methods in src/Entity/Event.php
+- setDate() method, for example, hides the internal storage format of datetime values from anyone working with events.
+- Similarly the setDescription() method requires setting the description and the text format simultaneously for security.
+
+
+
+## Interface
+## <img src="custom/images/event-interface.png">
+Note:
+- src/Entity/EventInterface.php
+
+
+
+
+## Viewing entities on a page
+## <img src="custom/images/route-handler.png">
+Note:
+- a route is needed that utilizes the view builder to output the entity’s fields on a given path
+- Add the following to the annotation in src/Entity/Event.php
+- Entity handlers are objects that take over certain tasks related to entities
+- Drupal core provides generic handlers that can be used as is
+- when more advanced functionality is required, custom handlers can be used instead
+- Instead of declaring routes belonging to entities in a *.routing.yml file like other routes,
+- they can be provided by a handler, as well.
+- Entity links denote at which paths on the website we can see an entity (or multiple entities) of the given type.
+- Cache rebuild and navigate to event/{id} page
+- code is incomplete because you will see access denied error
+
+
+
+
+## Add an administrative permission
+## <img src="custom/images/permission.png">
+Note:
+- rebuild cache
+- visit event/{id} page and you will not see access denied error but ther is no field on the page
+
+
+
+
+## Configure fields for display
+## <img src="custom/images/configure-field.png">
+Note:
+- Which fields to display when rendering the entity,
+- as well as how to display them, can be configured as part of the field definitions.
+- Display options can be set for two different display modes: view and form
+- The respective values of the label setting are above, inline and hidden.
+- Each field is displayed using a formatter.
+- Weights allow the order of fields in the rendered output
+- cache rebuild and fields will be shown.
+
+
+
+
+## List of formatter class
+## https://api.drupal.org/api/drupal/core%21lib%21Drupal%21Core%21Field%21Annotation%21FieldFormatter.php/class/annotations/FieldFormatter/8.2.x
+
+
+
+## Listing entities
+## Add administrative links
+Note:
+- You can do much more stuff with entities like display list of entities on a page
+- You can add useful administrative links like provide menu link under content to add event
+- view, delete and edit local task for event
+
+
+
+
+## Credit
+## Tobias Stoeckler
+### https://www.drupal.org/u/tstoeckler
+
+
+
+
+## Thank you!
 

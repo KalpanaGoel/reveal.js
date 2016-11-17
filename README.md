@@ -366,6 +366,11 @@ Note:
 
 
 
+## Useful links
+## https://www.drupal.org/docs/8/api/entity-api
+## https://www.drupal.org/docs/8/api/entity-api/introduction-to-entity-api-in-drupal-8
+
+
 
 ## Credit
 ## Tobias Stoeckler

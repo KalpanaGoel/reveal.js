@@ -299,8 +299,7 @@ Note:
 ## Load event
 ## <img src="custom/images/load-entity-2.png">
 Note:
-- Computed fields bring the ability to define fields on an object whose value is computed from the values of other fields.
-- In addition to the stored properties field types can also declare computed properties,
+- Computed properties are properties of fields that are not stored but derived or computed to provide convenience for developers so they don't have to work with raw data directly
 - such as the date property of a datetime field or the processed property of text fields.
 
 

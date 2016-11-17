@@ -377,6 +377,28 @@ Note:
 
 
 
+
+## Contrib Module
+### https://www.drupal.org/project/entity
+Note:
+- This module extends the entity API of Drupal core in order to provide a unified way to deal with entities and their properties.
+- It is mostky a UI for revisions
+
+
+
+## https://www.drupal.org/project/entityqueryapi
+Note:
+- It fills the gap between Drupal 8's built-in RESTful Services and Views with an easy to use.
+- out-of-the-box means for loading, filtering and paging entities in a RESTful style.
+
+
+## https://www.drupal.org/project/entitycache
+Note:
+- This is D7 version of the module
+- Entity cache puts core entities into Drupal's cache API.
+
+
+
 ## Useful links
 ## https://www.drupal.org/docs/8/api/entity-api
 ## https://www.drupal.org/docs/8/api/entity-api/introduction-to-entity-api-in-drupal-8

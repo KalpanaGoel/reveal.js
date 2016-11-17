@@ -13,6 +13,22 @@ Note:
 
 
 
+## <img src="custom/images/20161018_113750.jpg">
+
+
+
+## <img src="custom/images/20161018_113843.jpg">
+
+
+
+## <img src="custom/images/20161018_113650.jpg">
+
+
+
+## <img src="custom/images/20161018_113622.jpg">
+
+
+
 # What is an Entity?
 ## https://en.wikipedia.org/wiki/Entity
 Note:

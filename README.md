@@ -13,10 +13,6 @@ Note:
 
 
 
-## <img src="custom/images/20161018_113750.jpg">
-
-
-
 ## <img src="custom/images/20161018_113843.jpg">
 
 
